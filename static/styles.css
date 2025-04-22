@@ -1,0 +1,24 @@
+/* static/styles.css */
+body {
+    font-family: Arial, sans-serif;
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    line-height: 1.5;
+  }
+  
+  nav {
+    margin-bottom: 2rem;
+  }
+  nav a {
+    margin-right: 1rem;
+    text-decoration: none;
+    color: #0366d6;
+  }
+  h1, h2, h3 {
+    color: #333;
+  }
+  ul { list-style: none; padding: 0; }
+  li { margin-bottom: 1rem; }
+  form { margin: 1rem 0; }
+  

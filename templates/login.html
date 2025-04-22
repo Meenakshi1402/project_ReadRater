@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Log In – ReadRater{% endblock %}
+
+{% block content %}
+  <h1>Log In</h1>
+
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <ul>
+        {% for msg in messages %}
+          <li style="color:red;">{{ msg }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
+
+  <form method="POST" action="{{ url_for('login') }}">
+    <label>
+      Username:<br>
+      <input type="text" name="username" required>
+    </label>
+    <br><br>
+    <label>
+      Password:<br>
+      <input type="password" name="password" required>
+    </label>
+    <br><br>
+    <button type="submit">Log In</button>
+  </form>
+
+  <p>Don’t have an account? <a href="{{ url_for('register') }}">Register here</a>.</p>
+{% endblock %}

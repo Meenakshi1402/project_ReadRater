@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Add Book – ReadRater{% endblock %}
+{% block content %}
+  <h1>Add a New Book</h1>
+
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <ul>
+        {% for msg in messages %}
+          <li style="color:red;">{{ msg }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
+
+  <form method="POST" action="{{ url_for('add_book') }}">
+    <label>
+      Title:<br>
+      <input type="text" name="title" required>
+    </label>
+    <br><br>
+
+    <label>
+      Author:<br>
+      <input type="text" name="author" required>
+    </label>
+    <br><br>
+
+    <label>
+      Cover URL:<br>
+      <input
+        type="url"
+        name="cover_url"
+        placeholder="https://example.com/cover.jpg"
+      >
+    </label>
+    <br><br>
+
+    <button type="submit">Create Book</button>
+  </form>
+{% endblock %}

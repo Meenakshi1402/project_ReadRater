@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}{{ book.title }} – ReadRater{% endblock %}
+
+{% block content %}
+  <a href="{{ url_for('index') }}">← Back to catalog</a>
+
+  {% if book.cover_url %}
+    <img src="{{ book.cover_url }}"
+         alt="Cover for {{ book.title }}"
+         style="max-width:200px; display:block; margin:1em 0;">
+  {% endif %}
+
+  <h1>{{ book.title }}</h1>
+  <h3>by {{ book.author }}</h3>
+
+  {% if g.user %}
+    <p>
+      <a href="{{ url_for('edit_book', book_id=book.id) }}">Edit Book</a>
+      |
+      <form method="POST"
+            action="{{ url_for('delete_book', book_id=book.id) }}"
+            style="display:inline"
+            onsubmit="return confirm('Delete this book and all its reviews?');">
+        <button type="submit">Delete Book</button>
+      </form>
+    </p>
+  {% endif %}
+
+  <hr>
+
+  <h2>Reviews</h2>
+  {% if reviews %}
+    <ul>
+      {% for r in reviews %}
+        <li style="margin-bottom:1em">
+          <strong>★{{ r.rating }}</strong> by {{ r.username }}
+          <br>
+          <small>on {{ r.created_at }}</small>
+          <p>{{ r.comment }}</p>
+
+          {% if g.user and g.user.id == r.reviewer_id %}
+            <form method="POST"
+                  action="{{ url_for('delete_review', review_id=r.review_id) }}"
+                  style="display:inline"
+                  onsubmit="return confirm('Delete your review?');">
+              <button type="submit">Delete Review</button>
+            </form>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No reviews yet. Be the first to review!</p>
+  {% endif %}
+
+  <hr>
+
+  {% if g.user %}
+    <h2>Submit a Review</h2>
+    <form method="POST" action="{{ url_for('add_review', book_id=book.id) }}">
+      <label>
+        Rating:
+        <select name="rating" required>
+          <option value="">–Select–</option>
+          {% for i in range(1,6) %}
+            <option value="{{ i }}">{{ i }} star{% if i > 1 %}s{% endif %}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <br><br>
+      <label>
+        Comment:<br>
+        <textarea name="comment" rows="4" cols="50"
+                  placeholder="Write your thoughts…"></textarea>
+      </label>
+      <br><br>
+      <button type="submit">Post Review</button>
+    </form>
+  {% else %}
+    <p><a href="{{ url_for('login') }}">Log in</a> to submit a review.</p>
+  {% endif %}
+{% endblock %}

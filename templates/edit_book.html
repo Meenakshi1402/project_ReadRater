@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Edit {{ book.title }} – ReadRater{% endblock %}
+{% block content %}
+  <h1>Edit {{ book.title }}</h1>
+
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <ul>
+        {% for msg in messages %}
+          <li style="color:green;">{{ msg }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
+
+  <form method="POST">
+    <label>
+      Title:<br>
+      <input
+        type="text"
+        name="title"
+        value="{{ book.title }}"
+        required
+      >
+    </label>
+    <br><br>
+
+    <label>
+      Author:<br>
+      <input
+        type="text"
+        name="author"
+        value="{{ book.author }}"
+        required
+      >
+    </label>
+    <br><br>
+
+    <label>
+      Cover URL:<br>
+      <input
+        type="url"
+        name="cover_url"
+        value="{{ book.cover_url or '' }}"
+        placeholder="https://example.com/cover.jpg"
+      >
+    </label>
+    <br><br>
+
+    <button type="submit">Save Changes</button>
+  </form>
+{% endblock %}
